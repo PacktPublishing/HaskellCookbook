@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-04-13 Thu 06:33 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+
+
+
+<h2 id="org13c4cac">Working with Data Types</h2>
+
+<p>
+In this recipe, we will work with basic data types in Haskell. We
+will also define our own data types. 
+</p>
+
+
+
+
+<h2 id="orgc1208b2">How do we do it&#x2026;</h2>
+
+<ol class="org-ol">
+<li>Create a new project 'data-types' using <code>stack new
+     data-types</code>. Change into the directory <code>data-types</code>, and build
+the new project using using <code>stack build</code>.</li>
+
+<li><p>
+At the command prompt, run <code>stack ghci</code>. You will see the
+prompt. Enter =:type (5 :: Int) =
+</p>
+
+<pre class="example">
+*Main Lib&gt; :type (5 :: Int)
+(5 :: Int) :: Int
+</pre>
+
+<p>
+<code>:type</code> is a GHCi command to show the type of the expression. (In
+this case the expression is <code>5</code>). It means that the expression
+<code>(5 :: Int)</code> is an Int. Now enter <code>:type 5</code>
+</p>
+
+<pre class="example">
+*Main Lib&gt; :type 5
+5 :: Num t =&gt; t
+</pre>
+
+<p>
+GHCi will interpret 5 as <b>5 :: Num t =&gt; t</b> which means that
+Haskell identified 5 as some numerical type <b>t</b>. <code>Num t =&gt; t</code>
+shows that the type is t, and that it has an extra qualificiation
+that it shows some <b>Num</b> properties. Note that the result of
+<b>:type 5</b> is different than <b>:type (5::Int)</b>.
+</p>
+
+<p>
+Now enter <b>:type (5 :: Double)</b>. You will see (5 :: Double) ::
+Double. Do the same thing with (5::Float)
+</p>
+
+<pre class="example">
+*Main Lib&gt; :type (5 :: Double)
+(5 :: Double) :: Double
+</pre>
+
+<p>
+Do note the difference between <b>5</b>, <b>5::Int</b>, <b>5::Float</b> and
+<b>5::Double</b>. Without qualification type (such as :: Int), Haskell
+interprets the type as a generic type <b>Num t =&gt; t</b> i.e. 5 is some
+type t, which is a <b>Num t</b> or numerical type. 
+</p></li>
+
+<li><p>
+<b>Boolean Types</b> - Now enter following at the prompt
+</p>
+
+<pre class="example">
+*Main Lib&gt; :type True
+True :: Bool
+*Main Lib&gt; :type False
+False :: Bool
+</pre>
+
+<p>
+<code>True</code>, and <code>False</code> are valid boolean value, and their type is
+<code>Bool</code>. In fact, <code>True</code> and <code>False</code> are the only valid Bool
+values in Haskell. If you try <code>1 :: Bool</code>, you will see error. 
+</p>
+
+<pre class="example">
+*Main Lib&gt; 1 :: Bool
+
+&lt;interactive&gt;:9:1: error:
+    • No instance for (Num Bool) arising from the literal ‘1’
+    • In the expression: 1 :: Bool
+      In an equation for ‘it’: it = 1 :: Bool
+</pre>
+
+<p>
+Haskell will complain that 1 is a numerical type, and 'Bool' is
+not a numerical type which would somehow represent it (value 1).
+</p></li>
+
+<li>Now type <code>:type 'C'</code> at the prompt. GHCi will report its type to
+be <code>'C' :: Char</code>. Char is another data type and represents a
+Unicode character. A character is entered within single quotes.</li>
+
+<li><p>
+Get more information about each type. For doing it, you can enter
+<code>:info &lt;type&gt;</code> at the prompt.
+</p>
+
+<pre class="example">
+*Main Lib&gt; :info Bool
+data Bool = False | True
+   -- Defined in ‘ghc-prim-0.5.0.0:GHC.Types’
+instance Bounded Bool -- Defined in ‘GHC.Enum’
+instance Enum Bool -- Defined in ‘GHC.Enum’
+instance Eq Bool -- Defined in ‘ghc-prim-0.5.0.0:GHC.Classes’
+instance Ord Bool -- Defined in ‘ghc-prim-0.5.0.0:GHC.Classes’
+instance Read Bool -- Defined in ‘GHC.Read’
+instance Show Bool -- Defined in ‘GHC.Show’
+</pre>
+
+<p>
+This will show more inforamtion about the type. For Bool, Haskell
+shows that that it has two values <code>False | True</code>, and that it is
+defined in `ghc-prim-0.5.0.0:GHC.Types`. Here ghc-prim is the
+package name, which is followed by its version 0.5.0.0 and then
+Haskell tells that 'GHC.Types' is the module in which it is
+defined. 
+</p></li>
+</ol>
+
+
+
+
+
+<h2 id="org3ac3b83">How do we do it</h2>
+
+<ol class="org-ol">
+<li><p>
+We have seen four basic types, Int, Double, Char and Float. More
+information about these types is given below.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Type</th>
+<th scope="col" class="org-left">Description</th>
+<th scope="col" class="org-left">Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Int</td>
+<td class="org-left">Fixed precision integer type</td>
+<td class="org-left">Range \([-2^{29} .. (2^{29-1})]\)</td>
+</tr>
+
+<tr>
+<td class="org-left">Float</td>
+<td class="org-left">Single precision (32 bit) floating point number</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Double</td>
+<td class="org-left">Double precision (64 bit) floating point number</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Char</td>
+<td class="org-left">Character</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Bool</td>
+<td class="org-left">Boolean values</td>
+<td class="org-left">True or False.</td>
+</tr>
+</tbody>
+</table></li>
+
+<li>Note that all types start with a <b>capital letter</b>.</li>
+
+<li>In the last step <b>:info Bool</b>, Haskell also shows various
+<b>instance</b> information. It tells more about behavior about the
+type. For example <b>instance Eq Bool</b> means that the type <b>Bool</b>
+is an instance of some type class <b>Eq</b>. In Haskell, type-class
+should be read as a type which is associated with some behavior
+(or functions). Here the <b>Eq</b> type class is used in Haskell for
+showing <i>equality</i>.</li>
+</ol>
+
+
+
+
+
+<h2 id="org6c6cc4a">There is more&#x2026;</h2>
+
+<p>
+You can get more information about type classes by exploring <code>:info
+  Eq</code>. GHCi will tell you which types have <i>instances</i> of <b>Eq</b> type
+class, GHCi will also tell you which are the methods defined for
+Eq. 
+</p>
+
+
+
+
+<p class="date">Created: 2017-04-13 Thu 06:33</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+
+</body>
+</html>

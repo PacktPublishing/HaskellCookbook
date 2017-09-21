@@ -1,0 +1,5 @@
+#+STARTUP: overview hidestars
+#+TITLE: Working With Sets
+
+In this recipe, we will be looking at Data.Set.Set and the functions associated with it. A set is a collection of ordered items. And each item in the set is unique. 
+

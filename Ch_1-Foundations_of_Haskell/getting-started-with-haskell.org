@@ -1,0 +1,364 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+#+OPTIONS: author:nil creator:nil toc:nil c:nil num:nil
+#+OPTIONS: html-style:nil html-validation-link:nil 
+
+* Getting Started with Haskell
+In this recipe, we will work with GHC (Glagow Haskell Compiler), its
+interpreter, GHCi, and stack tool. We will write our first *Haskell*
+program and run it in the interpreter.
+
+** Tip
+   We will be using Glasgow Haskell Compiler throughout the
+   book. [[https://www.haskell.org/ghc/][Glasgow Haskell Compiler]] or GHC is the most widely used
+   haskell compiler. GHC supports [[http://www.haskell.org/haskellwiki/Definition][Haskell 2010 language
+   specifications]]. The current book is based on Haskell 2010
+   specifications. GHC supports extensive range of language
+   extensions.
+
+** Getting Ready
+   We will install stack, a modern tool for maintaining different
+   versions of Haskell compiler and working with different packages. 
+
+   1. _Install stack_
+
+      Visit https://docs.haskellstack.org/en/stable/README/ and
+      follow the instructions for your operating system.
+
+   2. _Run stack and verify version_
+      
+      Run stack, and check that stack works for your system
+      #+begin_example
+      d:\projects>stack --version
+      Version 1.1.2, Git revision c6dac65e3174dea79df54ce6d56f3e98bc060ecc (3647 commits) x86_64 hpack-0.14.0
+      #+end_example
+
+   3. _Setup GHC (Glasgow Haskell Compiler)_
+      Check the latest GHC version by visiting
+      https://www.haskell.org/ghc/. 
+
+      Set up GHC on your box by providing GHC version number
+
+      #+begin_example
+      d:\projects>stack setup 8.0.2
+      Preparing to install GHC to an isolated location.
+      This will not interfere with any system-level installation.
+      .... 
+      #+end_example
+
+      If you have already setup GHC on your box, then you will get
+      following
+
+      #+begin_example
+        d:\stack>stack setup 8.0.2
+        stack will use a locally installed GHC
+        For more information on paths, see 'stack path' and 'stack exec env'
+        To use this GHC and packages outside of a project, consider using:
+        stack ghc, stack ghci, stack runghc, or stack exec
+      #+end_example
+
+
+
+   8. _Pick up your editor_
+
+      You can set up your favourite editor to edit Haskell
+      code. Preferable editors are *Emacs*, *Vi*, *Sublime* and
+      more. Once you have picked up your favourite editor, ensure that
+      the executables for the editor remain in your path OR note down
+      the full path to the executable.
+
+
+
+** How to do it
+
+   1. _Create a new project *hello*
+
+      Create a new project *hello* by running following command at the
+      command prompt in an empty directory. Note that stack will
+      select the latest package resolver. *stack* will create a folder
+      by the project name *hello*.
+
+      #+begin_example
+        d:\projects>stack new hello
+        Downloading template "new-template" to create project "hello" in hello\ ...
+
+        The following parameters were needed by the template but not provided: author-email, author-name, category, copyright, github-username
+        You can provide them in D:\stack\config.yaml, like this:
+        templates:
+          params:
+            author-email: value
+            author-name: value
+            category: value
+            copyright: value
+            github-username: value
+        Or you can pass each one as parameters like this:
+        stack new hello new-template -p "author-email:value" -p "author-name:value" -p "category:value" -p "copyright:value" -p "github-username:value"
+
+        Looking for .cabal or package.yaml files to use to init the project.
+        Using cabal packages:
+        - hello\hello.cabal
+
+        Selecting the best among 10 snapshots...
+
+        Downloaded lts-8.9 build plan.
+        Fetching package index ...remote: Counting objects: 5449, done.
+        remote: Compressing objects: 100% (4321/4321), done.
+        remote: Total 5449 (delta 1434), reused 4464 (delta 985), pack-reused 0
+        Receiving objects: 100% (5449/5449), 1.64 MiB | 107.00 KiB/s, done.
+        Resolving deltas: 100% (1434/1434), completed with 626 local objects.
+        From https://github.com/commercialhaskell/all-cabal-hashes
+         t [tag update]            current-hackage -> current-hackage
+        Fetched package index.
+        Populated index cache.
+        Did not find .cabal file for feed-0.3.12.0 with Git SHA of 79ca07db28d5e5b22682b49d5984f921870a0f17
+        Right Nothing
+        ,* Matches lts-8.9
+
+        Selected resolver: lts-8.9
+        Initialising configuration using resolver: lts-8.9
+        Total number of user packages considered: 1
+        Writing configuration to file: hello\stack.yaml
+        All done.
+      #+end_example
+
+   2. Change to project directory (hello), and run 'stack
+      setup'. When run from new project directory, stack automatically
+      downloads corresponding GHC and set it up.
+
+   3. _Compile Project_
+
+      Build the project.
+
+      #+begin_example
+        d:\projects\hello>stack build
+        hello-0.1.0.0: configure
+        Configuring hello-0.1.0.0...
+        hello-0.1.0.0: build
+        Preprocessing library hello-0.1.0.0...
+        [1 of 1] Compiling Lib              ( src\Lib.hs, .stack-work\dist\ca59d0ab\build\Lib.o )
+        Preprocessing executable 'hello-exe' for hello-0.1.0.0...
+        [1 of 1] Compiling Main             ( app\Main.hs, .stack-work\dist\ca59d0ab\build\hello-exe\hello-exe-tmp\Main.o )
+        Linking .stack-work\dist\ca59d0ab\build\hello-exe\hello-exe.exe ...
+        hello-0.1.0.0: copy/register
+        Installing library in
+        D:\projects\hello\.stack-work\install\05480a1e\lib\x86_64-windows-ghc-8.0.2\hello-0.1.0.0-KwseWZXCZph1LcfBbJuRhm
+        Installing executable(s) in D:\projects\hello\.stack-work\install\05480a1e\bin
+        Registering hello-0.1.0.0...
+      #+end_example
+
+   4. _Run the project_
+
+      You can now run the project by 
+
+      #+begin_example
+        d:\projects\hello>stack exec -- hello-exe
+        someFunc
+      #+end_example
+
+      You should see the reply 'someFunc' printed on the console. It
+      means that the program compilation and execution is successful.
+
+   5. Inspect *hello* Project
+
+      Open an explorer (or file finder) and explore the hello
+      directory. 
+
+      [[file:hello-project.png]]
+
+      * The project contains two main directories, *app* and
+        *src*. The library code goes into *src* folder, whereas main
+        *executable* producing code goes into *app* folder.
+
+      * We are interested in app/Main.hs file.
+
+   6. _Set an editor_
+
+      You can set the editor either by defining environment variable,
+      *EDITOR* to point to the full path of editor's executable.
+
+   7. Run GHC interpreter
+
+      * Open the command prompt.
+      * Traverse to the *hello* project directory.
+      * Run GHC interpreter by executing,
+        #+begin_example
+        d:\projects\hello>stack ghci
+        The following GHC options are incompatible with GHCi and have not been passed to it: -threaded
+        Using main module: 1. Package `hello' component exe:hello-exe with main-is file: D:\projects\hello\app\Main.hs
+        Configuring GHCi with the following packages: hello
+        GHCi, version 8.0.2: http://www.haskell.org/ghc/  :? for help
+        [1 of 1] Compiling Lib              ( D:\projects\hello\src\Lib.hs, interpreted )
+        Ok, modules loaded: Lib.
+        [2 of 2] Compiling Main             ( D:\projects\hello\app\Main.hs, interpreted )
+        Ok, modules loaded: Lib, Main.
+        Loaded GHCi configuration from C:\Users\yogeshsa\AppData\Local\Temp\ghci11748\ghci-script
+        *Main Lib>
+        #+end_example
+      * Set an editor if you haven't done so already. We are using
+        *Vi* editor.
+        #+begin_example
+        *Main Lib> :set editor gvim
+        #+end_example
+
+   8. Open the Main.hs in the editor
+
+      #+begin_example
+      *Main Lib> :edit app/Main.hs
+      #+end_example
+   
+      This will open the file *app/Main.hs* in the window.
+
+      [[file:editor.png]]
+
+   9. Enter the following source in the editor
+      #+begin_src haskell
+        module Main where
+
+        -- Single line comment!
+        main :: IO ()
+        main = putStrLn "Hello World!"
+      #+end_src
+      
+      Save the source file, and exit. You will see that GHCi has
+      successfully loaded the saved file.
+
+      #+begin_example
+        [2 of 2] Compiling Main             ( d:\projects\hello\app\Main.hs, interpreted )
+        Ok, modules loaded: Lib, Main.
+        *Main>
+      #+end_example
+
+      You can also load the file by running ":load app/Main.hs" at the
+      command prompt.
+
+      Now you can run 'main' function that we have defined in the
+      source file, and you will see the message "Hello World"
+
+      #+begin_example
+      *Main> main
+      Hello World!
+      #+end_example
+
+      Exit the GHCi by running ":quit" at the prompt.
+
+   10. You can now rebuild and run the program by running following commands
+       #+begin_example
+       stack build
+       stack exec -- hello-exe
+       #+end_example
+
+       And you will again see the message "Hello World"
+   
+** How it works...
+
+   This recipe demonstrate usage of "stack" to create new project,
+   build it, set up corresponding GHC version, build the project and
+   run it. The recipe also demonstrate use of Haskell command prompt
+   aka GHCi to load, edit the file. GHCi also allows running the
+   program at the command prompt.
+
+   The recipe also shows the familiar "Hello World!" program and how
+   to write it. The program can be interpreted in the following way:
+
+*** Dissecting Hello World
+
+    We will now look at the parts of the program, "Main.hs" that we
+    have just created. We will look at different parts of the program
+    at a high level to understand structure of a typical Haskell
+    program. 
+
+
+    #+begin_src haskell
+    module Main where
+    #+end_src
+
+    The above line means that we are defining a module called
+    "Main". The source that follows "where" is contained in this
+    module. In absence of any specifications all the functions defined
+    in the module are exported, i.e. will be available to be used by
+    callee importing the module "Main". 
+
+    The following line which starts with '--' is a comment. '--' is
+    used for representing a single line comment. It can appear
+    anywhere in the source code, and comments everything till end of
+    the line. 
+
+
+    The next line,
+
+    #+begin_src haskell
+    main :: IO ()
+    #+end_src 
+    
+    is a declaration of a function. The *::*  is a keyword in haskell
+    and you can read it as /has type/. *IO* is a higher order data
+    type as it takes a parameter (IO is a special data type called IO
+    monad. We will see more about it at the end of this chapter),  ()
+    is an empty tuple, and is a parameter to *IO*. An empty tuple in
+    Haskell is equivalent to "Unit Type". One can say that it is
+    equivalent to "void" in imperative languages. 
+
+    Hence *main :: IO ()* should be interpreted as:
+
+    main /has a type/ *IO ()*. 
+
+    The second line actually defines the function.
+    #+begin_src haskell
+    main = putStrLn "Hello World"
+    #+end_src
+
+    It simply means that *main* is a function whose /value/ is
+    equivalent to an expression on the right /putStrLn "Hello
+    World"/. 
+
+    *putStrLn* is a function defined in Prelude, and you can look up
+     the type of the function by entering the following command at the
+     prompt. 
+
+     #+begin_example haskell
+       Prelude> :type putStrLn
+       putStrLn :: String -> IO ()
+     #+end_example
+
+     Here putStrLn has a type "String -> IO ()". It means that
+     putStrLn is a function that when applied and argument of type
+     "String", will have resultant type "IO ()". Note how it matches
+     with our type declaration of "main" function.
+
+
+     The function declaration in the source code in Haskell is not
+     comulsory, and Haskell compiler can figure the type of the
+     function all by itself by looking at the definition of the
+     function. You can try this by again editing the source file, and
+     removing declaration. 
+
+     To edit the same file again, you can just issue command ":edit"
+     without any parameter. GHCi will open editor with previously
+     opened file. To reload the file again, you can issue command
+     ":reload", and GHCi will load the file. 
+
+     Now you can verify type of function "main" by issuing ":t main"
+     (:t is equivalent to :type). Verify that the type of *main* is
+     "IO ()". 
+
+
+** There's more...
+   If you visit stack website at https://www.stackage.org/, you will
+   notice that stack publishes nightly packages, and LTS (Long Term
+   Support) packages. While creating a new project stack downloads
+   latest LTS package list. It is also possible to provide the name of
+   LTS package explicitly by providing `stack new --resolver
+   lts-6.4`. 
+
+   In the project directory, you will notice two files, 
+
+   + <project>.yaml, and
+   + <project>.cabal
+
+  The YAML file is created by stack to specify various things
+  including LTS version, external packages etc. The cabal file is the
+  main project file for Haskell package. Cabal is the tool that stack
+  uses internally to do build, packaging etc. However, there are
+  several advantages of using stack as stack also support pre-built
+  packages and manages cabal nicely. Furthermore, stack also supports
+  `docker` environment.

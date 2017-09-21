@@ -1,0 +1,55 @@
+digraph fibonacci {
+  rankdir = BT
+  f5 [label = "fib 5"]
+  f5p [label = "+", shape=none]
+  f4 [label = "fib 4"]
+  f3 [label = "fib 3"]
+
+  f5p -> f5
+  f4 -> f5p
+  f3 -> f5p
+
+  f4p [label = "+", shape=none]
+  f3_1 [label = "fib 3"]
+  f2_1 [label = "fib 2"]
+
+  f4p -> f4
+  f3_1 -> f4p
+  f2_1 -> f4p
+
+  f3p [label = "+", shape=none]
+  f2_2 [label = "fib 2"]
+  f1 [label = "fib 1 = 1"]
+
+  f3p -> f3
+  f2_2 -> f3p
+  f1 -> f3p
+
+  f3p1 [label = "+", shape=none]
+  f2_3 [label = "fib 2"]
+  f1_3 [label = "fib 1 = 1"]
+  f3p1 -> f3_1
+  f2_3 -> f3p1
+  f1_3 -> f3p1
+
+  f2p1 [label = "+", shape=none]
+  f1_4 [label = "fib 1 = 1"]
+  f0_4 [label = "fib 0 = 0"]
+  f2p1 -> f2_1
+  f1_4 -> f2p1
+  f0_4 -> f2p1
+  
+  f2p2 [label = "+", shape=none]
+  f1_5 [label = "fib 1 = 1"]
+  f0_5 [label = "fib 0 = 0"]
+  f2p2 -> f2_2
+  f1_5 -> f2p2
+  f0_5 -> f2p2
+
+  f2p3 [label = "+", shape=none]
+  f1_6 [label = "fib 1 = 1"]
+  f0_6 [label = "fib 0 = 0"]
+  f2p3 -> f2_3
+  f1_6 -> f2p3
+  f0_6 -> f2p3
+}

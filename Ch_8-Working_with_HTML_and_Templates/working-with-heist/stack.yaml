@@ -1,0 +1,9 @@
+flags: {}
+extra-package-dbs: []
+packages:
+- '.'
+extra-deps:
+- heist-1.0.1.0
+- map-syntax-0.2.0.2
+- xmlhtml-0.2.5
+resolver: lts-9.1

@@ -1,0 +1,394 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+#+OPTIONS: author:nil creator:nil toc:nil c:nil num:nil
+#+OPTIONS: html-style:nil html-validation-link:nil 
+
+* Working with Pure Functions and User Defined Data Types
+  In this recipe, we will work with pure functions and define simple
+  user defined data types. We will represent quadratic equation and
+  its solution using user defined data type. We will then define pure
+  functions to find solution to the quadratic equation.
+
+** Getting Ready
+   1. Create a new project *quadratic* using *stack new
+      quadratic*. Change into the project folder.
+   2. Delete *src/Lib.hs*, and create a new file *src/Quadratic.hs* to
+      represent the quadratic equation and its solution.
+   3. Open *quadratic.cabal*, and in the section *library*, replace
+      /Lib/ by /Quadratic/ in the tag *exposed-modules*:
+      #+begin_example
+        library
+          hs-source-dirs:      src
+          exposed-modules:     Quadratic
+          build-depends:       base >= 4.7 && < 5
+          default-language:    Haskell2010
+      #+end_example
+
+
+** Background
+   A quadratic equation is represented by $a*x^2 + b*x + c = 0$. 
+
+   There are three possible cases that we have to handle
+   
+*** Case I - $a$ and $b$ are zero
+    This is an error case, we should flag error
+
+*** Case II - $a$ is zero
+    This is a linear equation, and the solution to this should be $x =
+    -c/b$. 
+
+*** Case III - Quadratic equation
+    In this case the solution to the equation is represented by
+    $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$ 
+
+    In the above equation, the $b^2 - 4*a*c$ is called discriminant of
+    the solution. Depending upon sign of the discriminant, the
+    solution can take following forms.
+
+    * *Case A* - Discriminant is zero
+      Two solutions coincide, and the solution is $\frac{-b}{2*a}$.
+    * *Case B* - Discriminant is positive
+      Two solutions are real.
+    * *Case C* - Discriminant is negative
+      The solutions are complex.
+
+
+** How do we do it
+   1. Open *Quadratic.hs*, and add module definition to it. 
+      #+begin_src haskell
+        module Quadratic where
+      #+end_src
+
+   2. Import standard module *Data.Complex* to help us represent
+      complex solution to the quadratic equation.
+
+   3. Define data type to represent quadratic equation.
+      #+begin_src haskell
+        data Quadratic = Quadratic { a :: Double, b :: Double, c :: Double }
+                       deriving Show
+      #+end_src
+
+      This represents the quadratic equation of the form $a*x^2 + b*x +
+      c = 0$. 'a', 'b', and 'c' represent the corresponding constants in
+      the equation.
+
+   4. Define data type for representing root
+      #+begin_src haskell
+        type RootT = Complex Double
+      #+end_src
+      This represents the complex data type parameterised by
+      'Double'. *RootT* is synonymous to type *Complex Double* (similar
+      to /typedef/ in C/C++). 
+
+   5. Quadratic equation has two roots, and hence we can represent both
+      the roots by,
+     #+begin_src haskell
+       import Data.Complex
+
+       type RootT = Complex Double
+
+       data Roots = Roots RootT RootT deriving Show
+     #+end_src
+
+   6. Implement the solution. We will take /top-down/ approach to
+      create a solution. We will define a top level function where we
+      will implementing function assuming lower level details. 
+
+      #+begin_src haskell
+      roots :: Quadratic -> Roots
+      #+end_src
+
+      This shows that the function *roots* takes one argument of type
+      /Quadratic/, and returns /Roots/.
+
+      Implement three cases mentioned in the section above. 
+
+      #+begin_src haskell
+        -- | Calculates roots of a polynomial and return set of roots
+        roots :: Quadratic -> Roots
+
+        -- Trivial, all constants are zero, error roots are not defined
+        roots (Quadratic 0 0 _) = error "Not a quadratic polynomial"
+
+        -- Is a polynomial of degree 1, x = -c / b
+        roots (Quadratic 0.0 b c) = let root = ( (-c) / b :+ 0)
+                                    in Roots root root
+
+        -- b^2 - 4ac = 0
+        roots (Quadratic a b c) =
+          let discriminant = b * b - 4 * a * c
+          in rootsInternal (Quadratic a b c) discriminant
+      #+end_src
+
+      We have referred to *rootsInternal* function which should handle
+      case *A*, *B*, and *C* for the case III above. 
+
+   7. Implement rootsInternal function to find all roots of quadratic
+      equation. 
+
+      #+begin_src haskell
+        rootsInternal :: Quadratic -> Double -> Roots
+        -- Discriminant is zero, roots are real
+        rootsInternal q d | d == 0 = let r = (-(b q) / 2.0 / (a q))
+                                         root = r :+ 0
+                                     in Roots root root
+
+        -- Discriminant is negative, roots are complex
+        rootsInternal q d | d < 0 = Roots (realpart :+ complexpart) (realpart :+ (-complexpart))
+          where plusd = -d
+                twoa = 2.0 * (a q)
+                complexpart = (sqrt plusd) / twoa
+                realpart = - (b q) / twoa
+
+        -- discriminant is positive, all roots are real
+        rootsInternal q d = Roots (root1 :+ 0) (root2 :+ 0)
+          where plusd = -d
+                twoa = 2.0 * (a q)
+                dpart = (sqrt plusd) / twoa
+                prefix = - (b q) / twoa
+                root1 = prefix + dpart
+                root2 = prefix - dpart
+      #+end_src
+
+   8. Open *src/Main.hs*, we will use the module /Quadratic/ here to
+      solve couple of quadratic equations. Add following in *Main.hs*.
+
+      #+begin_src haskell
+        module Main where
+
+        import Quadratic
+        import Data.Complex
+
+        main :: IO ()
+        main = do
+          putStrLn $ show $ roots (Quadratic 0 1 2)
+          putStrLn $ show $ roots (Quadratic 1 3 4)
+          putStrLn $ show $ roots (Quadratic 1 3 4)
+          putStrLn $ show $ roots (Quadratic 1 4 4)
+          putStrLn $ show $ roots (Quadratic 1 0 4)
+      #+end_src
+
+      Execute the application by building the project using *stack
+      build*, and then executing with *stack exec -- quadratic-exe* at
+      the command prompt. You will see following output:
+
+      #+begin_example
+        Roots ((-2.0) :+ 0.0) ((-2.0) :+ 0.0)
+        Roots ((-1.5) :+ 1.3228756555322954) ((-1.5) :+ (-1.3228756555322954))
+        Roots ((-1.5) :+ 1.3228756555322954) ((-1.5) :+ (-1.3228756555322954))
+        Roots ((-2.0) :+ 0.0) ((-2.0) :+ 0.0)
+        Roots ((-0.0) :+ 2.0) ((-0.0) :+ (-2.0))
+      #+end_example
+     
+
+** How does it work
+
+   1. We define module at the top of the file with *module Quadratic
+      where*. Note that name of the module matches with file name, and
+      it starts with a capital letter. *module Quadratic where* is
+      followed by the definition of module (data types and functions
+      therein). This exports all data types and functions to be used by
+      importing module. 
+
+   2. We import standard module, *Data.Complex*. The modules can be
+      nested. Many useful and important modules are defined in the base
+      package. Every module automatically includes a predefined module
+      called *Prelude*. The prelude exports many standard modules and
+      useful functions. For more information about base modules, refer
+      to https://hackage.haskell.org/package/base.
+
+   3. The user defined data is defined by keyword 'data' followed by
+      the name of the data type. The data type name always start with
+      capital letter (E.g. /data Quadratic/)
+
+      Here we define Quadratic as,
+
+      #+begin_src haskell
+      data Quadratic = Quadratic { a :: Double, b :: Double, c :: Double } deriving Show
+      #+end_src
+     
+      Several things to be noticed here,
+
+      * The name on the left 'Quadratic' is called type constructor. It
+        can take one or more data types. In this case, we have none.
+
+      * The name 'Quadratic' on the right is called as *data
+        constructor*. This is used to create value of the type defined
+        on the left hand side.
+
+      * The data constructor, 'Quadratic' is followed by *{ a ::
+        Double, b :: Double, c :: Double }*. This is called as
+        *record syntax* for defining fields. 'a', 'b' and 'c' are
+        fields, each of type *Double*.
+
+      * Each field is a function in itself, that take data type as the
+        first argument, and returns value of the field. In the above
+        case, 'a' will have function type *Quadratic -> Double*,
+        meaning that 'a' will take value of type *Quadratic* as first
+        argument, and returns the field 'a' of type *Double*.
+
+      * The definition of data type is followed by *deriving
+        Show*. *Show* is a standard type class in Haskell, and is used
+        for converting the value to a *String*. In this case, Haskell
+        can automatically generate the definition of *Show*. However,
+        it is also possible to write our own definition. Usually, the
+        definition generated by Haskell is sufficient.
+
+   4. We define root as type *Complex Double*. The data type *Complex*
+      is defined in the module *Data.Complex* and its type constructor
+      is parameterized by a type parameter 'a'. In fact the *Complex*
+      type is defined as
+
+      #+begin_src haskell
+      data Complex a = a :+ a
+      #+end_src
+
+      Several things to be noticed here. First, the type constructor of
+      *Complex* takes an argument 'a'. This is called type argument, as
+      *Complex* type can be constructed with any type 'a'. 
+
+      Second thing to note is how the data constructor is defined. The
+      data constructor name is not alphanumeric, and it is
+      allowed. Also since data constructor takes two parameters, and
+      for data constructor can be defined using /infix/ notation.
+
+      Third thing to note that the type parameter can be used as a type
+      while defining data constructor.
+
+      Since our quadratic equation is defined in terms of 'Double', the
+      complex root will always have a type 'Complex Double'. Hence we
+      define a type synonym using
+
+      #+begin_src haskell
+      type RootT = Complex Double
+      #+end_src
+
+   5. We define two roots of the quation by using 
+      #+begin_src haskell
+      data Roots = Roots RootT RootT deriving Show
+      #+end_src
+  
+      Here we have not used record syntax, but just decided to create
+      two anonymous fields of type RootT with data constructor
+      *Roots*.
+
+   6. The function *roots* is defined as 
+
+      #+begin_src haskell
+      roots :: Quadratic -> Roots
+      #+end_src
+
+      Which can be interpreted as roots has a type (Quadratic ->
+      Roots), which is a function that takes a value of type
+      *Quadratic* and returns a value of type *Roots*.
+
+      * Pattern matching
+
+        We can write values of exploding data constructor in the
+        function arguments. Haskell matches these values, and then
+        calls the definition on the right hand side. In haskell, we can
+        separate function definition using such *matching*. Here we use
+        pattern matching to separate cases I, II and III defined
+        above. The case I can be matched with value /(Quadratic 0 0 _)/
+        where first two zeros match fields 'a' and 'b'
+        respectively. The last field is specified by '_', which means
+        that we /do not care/ about this value, and should not be
+        evaluated.
+
+      * Raising an error
+
+        For the first case, we flag an error by using function
+        *error*. The function *error* takes a string and has a
+        signature (error :: String -> a) which mean that it takes a
+        *String* and returns value of any type 'a'. Here it raises an
+        exception.
+
+      * let .. in clause
+        The second case uses, 
+
+        #+begin_src haskell
+        let root = ( (-c) / b :+ 0)
+        in Roots root root
+        #+end_src
+
+        Here *let* clause is used for binding identifiers (which always
+        start with lower case letter, so do function names). The *let*
+        clause is followed by *in* clause. The *in* clause has the
+        expression, which is the value of *let...in* clause. The *in*
+        expression can use identifiers defined in *let*. Furthermore,
+        *let* can bind multiple identifiers, and can define functions
+        as well.
+
+   7. We define *rootsInternal* as a function to actually calculate the
+      roots of a quadratic equation. The function *rootsInternal* uses
+      *pattern guards*.
+
+      * Pattern Guards
+
+        Pattern guards are conditions that are defined after a vertical
+        bar '|' after the function arguments. The pattern guard defines
+        a condition. If the condition is satisfied, then the expression
+        on the right side is evaluated. 
+
+        #+begin_src haskell
+        rootsInternal q d | d == 0 = ...
+        #+end_src
+
+        In the above definition, *d == 0* defines the pattern
+        guard. If this condition is satisfied, then the function
+        definition is bound to expression on the right.
+
+      * where clause
+       
+        The function *rootsInternal* also uses *where* clause. This is
+        another form of *let...in* clause, and 
+
+        #+begin_src haskell
+        let <bindings>
+        in <expression> 
+        #+end_src
+
+        translates to 
+        #+begin_src haskell
+        <expression>
+        where 
+           <bindings>
+        #+end_src
+
+   8. In *Main.hs*, we import the *Quadratic* module, and and use the
+      functions and data type defined in it. We use, 'do' syntax which
+      is used in conjunction with IO type, for printing to the console,
+      reading from console, and in general for interfacing with outside
+      world. 
+
+      The function putStrLn prints the string to the console. The
+      function *show* converts a value to a string. This is enabled
+      because of auto-definition due to *deriving Show*. 
+
+      We use data constructor to create values of *Quadratic*. We can
+      simply specify all the fields in the order like (Quadratic 1 3
+      4), where a = 1, b = 3, and c = 4. We can also specify value of
+      quadratic using record syntax like *Quadratic { a = 10, b = 30, c
+      = 5 }*. 
+
+      Rather than putting things into brackets such as 
+
+      #+begin_src haskell
+        putStrLn (show (roots (Quadratic 0 1 2)))
+      #+end_src
+
+      we use a special function '\$', which simplifies application of
+      brackets and allows us to apply arguments to function from right
+      to left. 
+
+
+** Source Formatting
+   You must have also noticed how haskell source code is
+   formatted. The blocks are indented by white spaces. There is no
+   hard and fast rule for indenting, however, it must be noted that
+   there has to be a significant white space indent for a source code
+   block, such as *let* clause or *where* clause. 
+
+   A simple guideline is that any block should be indented in such a
+   way that it is left aligned and that increases readability of the
+   code. 

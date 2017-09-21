@@ -1,0 +1,253 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+#+OPTIONS: author:nil creator:nil toc:nil c:nil num:nil
+#+OPTIONS: html-style:nil html-validation-link:nil 
+
+* Working with List
+  In this recipe, we will work with List data type in Haskell. List is
+  one of the most widely used data type in Haskell. 
+
+** Getting Ready
+   * Use stack to create a new project, *list-functions*, and change
+     into the the project directory. Build the project with *stack
+     build*.
+   * Remove contents of src/Lib.hs, and add the module heading.
+     #+begin_src haskell
+     module Lib where
+     #+end_src
+
+** How to do it
+   1. Create an empty list
+      #+begin_src haskell
+      emptyList = []
+      #+end_src
+
+   2. Prepend an element to the list
+      #+begin_src haskell
+      prepend = 10 : []
+      #+end_src
+
+   3. Create a list of 5 integers
+      #+begin_src haskell
+      list5 = 1 : 2 : 3 : 4 : 5 : []
+      #+end_src
+
+   4. Create a list of integers from 1 to 10
+      #+begin_src haskell
+      list10 = [1..10]
+      #+end_src
+
+   5. Create an infinite list
+      #+begin_src haskell
+      infiniteList = [1..]
+      #+end_src
+
+   6. Head of the list
+      #+begin_src haskell
+      getHead = head [1..10]
+      #+end_src
+
+   7. Tail of a list 
+      #+begin_src haskell
+      getTail = tail [1..10]
+      #+end_src
+
+   8. All but last element
+      #+begin_src haskell
+      allbutlast = init [1..10]
+      #+end_src
+
+   9. Take 10 elements
+      #+begin_src haskell
+      take10 = take 10 [1..]
+      #+end_src
+
+   10. Drop 10 elements
+      #+begin_src haskell
+      drop10 = drop 10 [1..20]
+      #+end_src
+
+   11. Get n'th element
+      #+begin_src haskell
+      get1331th = [1..] !! 1331
+      #+end_src
+
+   12. Is element of the list 
+      #+begin_src haskell
+      is10element = elem 10 [1..10]
+      #+end_src
+
+   13. Pattern matching on list
+      #+begin_src haskell
+      isEmpty [] = True
+      isEmpty _ = False
+      #+end_src
+
+   14. Pattern matching more elements
+      #+begin_src haskell
+      isSize2 (x:y:[]) = True
+      isSize2 _ = False
+      #+end_src
+
+   15. Concatenate two lists
+      #+begin_src haskell
+      cat2 = [1..10] ++ [11..20]
+      #+end_src
+
+   16. String as list
+      #+begin_src haskell
+      a2z = ['a'..'z']
+      #+end_src
+
+   17. String as list
+      #+begin_src haskell
+      strHead = head "abc"
+      #+end_src
+
+   18. Zip two lists
+      #+begin_src haskell
+      zip2 = zip ['a'..'z'] [1.. ]
+      #+end_src
+   
+
+** How does it work
+   
+   
+*** List Definition
+
+    List is defined as 
+
+    #+begin_src haskell
+    data [] a = []       -- Empty list or
+              | a : [a]  -- An item prepended to a list, is also a list
+    #+end_src
+
+    There are two *data constructors*. The first data constructor []
+    shows an empty list, and a list with no elements is a valid
+    list. The second data constructor tells us that, an item prepended
+    to a list is also a list. 
+
+    Also notice that the type constructor is parameterized by a type
+    parameter 'a'. It means that the list can be constructed with any
+    type 'a'.
+
+*** List creation
+    The first three snippets in previous sections are created using
+    list's data constructors. The third example shows recursive
+    application of second constructor. 
+
+*** Enumerated list
+    The fourth and fifth snippets show how to create a list from
+    enumerated values. Enumerated values are those which implement
+    type class 'Enum', and are implemented by ordered types such as
+    Int, Double, Float, Char etc. The enumerated type allow specify a
+    range using '..' (For example, [1..10] which means numerals 1 to
+    10, and including 10). It is also possible to drop the 'to'
+    value. For example [1..] will create an infinite list. It is also
+    possible to specify an increment by specifying consecutive
+    values. For exampel [1,3,..10] will expand ot [1,3,5,7,9] (Note
+    that the last vaue 10 is not part of it as it does not belong to
+    the sequence).
+
+*** Head and Tail of a list
+    From the definition of a list, any element when prepended to a
+    list, is also a list. For example, *1:[2,3]* is also a list. Here,
+    '1' is called head of the list, and '2' is called tail of the
+    list. 
+
+    The functions, *head* and *tail* respective return head, and tail
+    of the list. The snippets 6 and 7 show an example of head and
+    tail. Head has a signature (head :: [a] -> a) and tail has a
+    signature (tail :: [a] -> [a]).
+
+*** Operations on List
+    Once we have a list we can do various operations, such as,
+
+    + /init \:: [a] -> [a]/
+      Take all but last element of the list. This is shown in
+      snippet 8.
+
+    + /take \:: Int -> [a] -> [a]/
+      Take at the most first 'n' elements of the list. (Shown as Int
+      argument above). If the list has less than 'n' elements, then it
+      will consume entire list. This is shown in snippet 9.
+
+      In snippet 9, we work on an infinite list, and take only first
+      10 elements. This works in haskell, because in haskell nothing
+      is evaluated untill computation needs a value. And hence, even
+      if we have an infninite list, when we take first 10 elements,
+      only 10 elements of the list are evaluated. Such things are not
+      possible in /strict/ languages. Haskell is not a strict
+      language. 
+
+    + /drop \:: Int -> [a] -> [a]/
+      Similar to take, but drop function drops first 'n' elements. It
+      will drop the whole list if the list has less than 'n'
+      elements. If we operate on an infinite list, then we will get an
+      infnite list back. Snippet 10 shows an example of drop.
+
+
+*** Indexed access 
+    The function names in haskell do not necessarily start with
+    alphabets. Haskell allow using combination of other characters as
+    well. Many colletions, including list, define '!!' as an indexing
+    function. Snippet 11 uses this.
+
+    The function '!!' takes a list and an index 'n', and returns 'n'th
+    element starting '0'. The signature of '!!' is ((!!) :: Int -> [a]
+    -> a).
+
+    It is important to note that an access to an indexed element in
+    the list is not random. It is sequential and is directly
+    proportional to the index value. Hence, care should be taken to
+    use this function.
+
+*** Checking if an element is present
+    The function 'elem' checks if a given element is present in the
+    list. The elem must be able to equate itself with another of its
+    own type. This is done by implementing type class 'Eq', which
+    allows checking if two values of a type are equal or not. 
+
+    
+*** Pattern matching on list
+    Once we know that a list has two data constructors, we can use
+    them in the function argument for pattern matching. Hence we can
+    use [] for empty list matching, and we can use (x:y:[]) for
+    matching two elements followed by an empty list. 
+
+    In snippet 13, we have used empty list pattern for checking if a
+    list is empty or not. 
+
+    In snippet 14, we have used (x:y:[]) to check if the list has
+    length 2 or not. This might not be very good thing if we want to
+    check the larger size. There we might use function 'length' to get
+    the size of the list. But please be aware of the fact that the
+    function length is not constant time function, but proportional to
+    the size of the list. 
+
+*** List concatenation
+    It is possible to concatenate two lists by using function
+    '++'. The running time of this function is directly proportional
+    to the size of the first list.
+
+*** Strings are lists.
+    It is important to note that the type 'String' in Haskell is
+    implemented as a list of 'Char'
+
+    #+begin_src haskell
+    type String = [Char]
+    #+end_src
+
+    Hence all list operations are valid string operations as
+    well. The snippets 17 and 18 show this. Since list is not random
+    access collection, and operations such as concatenation are not
+    constant time operations, String in haskell are not very
+    efficient. There are libraries such as 'text' which implement
+    Strings in very efficient way.
+
+** There is more...
+   The above list of operations on 'Haskell List' is not
+   exhaustive. You can refer to module 'Data.List' in hackage. It
+   provides documentation to all the functions which operate on list.
+
+

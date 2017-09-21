@@ -1,0 +1,165 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+#+OPTIONS: author:nil creator:nil toc:nil c:nil num:nil
+#+OPTIONS: html-style:nil html-validation-link:nil 
+
+* Understanding Functional Programming
+  Understanding the difference between what and how is very critical 
+  to understand the expressiveness, composability and reasoning power
+  of functional languages. Working with functional languages involves 
+  working with expressions and evaluations of expressions. The
+  programmer builds functions consisting of expressions, and composes  
+  them together to solve a problem at hand. Essentially, a functional
+  programmer is working towards construction of a function to solve
+  the problem that he/she is working on.
+
+** Tip
+   Unlike most recipes in this book, this recipe does not contain a
+   full program that the reader can execute. Instead, this recipe
+   contains a sample code for the reader to understand the concept of
+   *functional programming*. An alternative best way to read this
+   book is to go through the recipes of interest and work with
+   them. Of course, the best way to read the book is to go through
+   initial introductory three chapters, and then move to point of
+   interest. 
+
+** Getting Ready
+   An introductory familiarity with a programming and a programming
+   language is recommended, but it is not a pre-requisite. 
+
+** How to do it
+   We will look at two versions of the same program. One is written
+   in /c/ and other is written in /haskell/. The program adds two
+   /integers/ and returns the result of addition. 
+
+ * Program in *C*
+   + The program defines a function /add/.
+   + /add/ takes two integer arguments, /a/ and /b/.
+   + The function adds two arguments and returns the result of
+     addition.
+   + The function also writes to a log file that it is adding two
+     numbers. 
+   #+begin_src c
+     int add(int a, int b) {
+       fprintf(logfile, "adding two numbers, %d, and %d", a, b);
+       int c = a + b;
+       return c;
+     }
+   #+end_src
+
+ * Program in *Haskell*
+   + The program defines a function /add/
+   + The function /add/ takes two integer arguments /a/ and /b/.
+   + The function equates to an expression that is addtion of /a/ and
+     /b/. 
+   #+begin_src haskell
+     add :: Int -> Int -> Int
+     add a b = a + b
+   #+end_src
+
+** How it works
+   We will look at both examples and compare them to get
+   understanding of functional programming concepts. 
+    
+*** Execution of C Program
+    The core of the function /add/ is the following statement:
+    #+begin_src c
+    int c = a + b;
+    #+end_src
+
+    The function is executed as follows:
+    [[file:Imperative-Addition.png]]
+
+    Each step in the above diagram, such as "/Get value stored at
+    'a'/" or "/Add two values/" and "/Store result at 'c'/" are all
+    commands given to the the machine that we are working on. The
+    program is very close to the /instructions/ that this machine can
+    obey. The machine faithfully follows these instructions and
+    produces the result.
+
+*** Execution of Haskell Program
+    The core of the function /add/ written in *Haskell* is the
+    following statement:
+
+    #+begin_src haskell
+    add a b = a + b
+    #+end_src
+
+    Although the right hand side looks very similar to the /c/
+    statement, there is a fundamental difference between the
+    execution model. 
+
+    Here the function /add/ takes two arguments, which are applied to
+    the expression on the right. Hence, the expression /add a b/ is
+    equivalent to a + b.  Here we are not talking about instructions,
+    but expressions and application of values /a/ and /b/ to the
+    expression on the right side, and the value of the expression.
+    In short, one can say that, /add a b/ is bound to value of the
+    expression /a + b/. And when we call, /add 10 20/, the expression
+    is applied the value 10 and 20 respectively. In this way, the
+    function /add/ is equivalent to a value which evaluates to an 
+    expression that can be applied two values. 
+    
+    The functional program is free to evaluate the expression in
+    multiple ways, One possible execution in a functional context is
+    shown below, 
+
+    [[file:Functional-Addition.png]]
+
+    In the above addition, we first substitue the value of /a/ in the
+    expression /a + b/, and then we substitute the value of /b/. In
+    the end, we reduce the expression to a single value, which is the
+    value of the expression.
+
+     
+*** Tip
+    Note that the in the expression /add a b/, a and b both can be
+    expressions. In this case, we can either evaluate the
+    expressions before substituting in the expression of /add a b/
+    or we can substitute the experession itself in the expression of
+    /add a b/. For example, 
+
+    #+begin_src haskell
+    add (add 10 20) 30 
+    #+end_src
+
+    can be substituted in the expression /a + b/ either as,
+
+    #+begin_src haskell
+    add (add 10 20) 30 = (10 + 20) + 30
+    #+end_src
+
+    or by evaluating /add 10 20/ first and then substituting in the
+    expression as,
+
+    #+begin_src haskell
+    add (add 10 20) 30 = add (10 + 20) 30
+                       = add 30 30
+                       = 30 + 30
+    #+end_src
+
+    The first approach is called *call by name* and the second
+    approach is called as *call by value*. Note that, whichever
+    approach we take, the value of expression remains *same*.
+
+    In practice, languages like /Haskell/ take an intelligent
+    approach, which is more geared towards efficiency. In haskell,
+    expressions are typically reduced to /weak headed normal form/
+    in which the whole expression is not evaluated, but rather a
+    selective reduction is carried out, and then it is substituted
+    in the expression. 
+
+
+*** There is more...
+    An astute reader must have observed the absence of the
+    counterpart of the statement /fprintf/ in the haskell
+    version. This is not an accident. The function /fprintf/
+    involves printing a log to a file. This means that the function
+    is trying to change something beyond its computation. This is
+    called a /side effect/. In Haskell, the functions are /pure/ and
+    /side effects/ are not allowed. And hence, the function /add/
+    does not have an /fprintf/ counterpart. 
+
+    Of course, every program should have some side effect, otherwise
+    it would be pretty useless. But in Haskell, side effects (impure
+    functions) are carefully separated from pure functions. 

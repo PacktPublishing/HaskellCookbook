@@ -1,0 +1,23 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+#+OPTIONS: author:nil creator:nil toc:nil c:nil num:nil
+#+OPTIONS: html-style:nil html-validation-link:nil 
+
+* Introduction
+
+We all love programs! On one side, there are a surgical programming
+languages like c, c++ which can solve the problem with clinical
+efficiency. This can be good and bad at the same time. A very
+experienced programmer can write an very efficient code, at the same
+time, it is also possible to write code which is ineligible, and very
+difficult to understand. On other side there are programs which are
+elegant, composable, not only easier to understand, but also easier to
+reason with, like Lisp, ML, and Haskell. 
+
+It is the second kind of programs that we will be looking at in this
+book. Not that efficiency is not important to us, and neither it means
+that we cannot write elegant programs in C/C++. But we will be
+concentrating more on expressiveness, modularity and composability of
+the programs. We will be interested more on *what* of the program, and
+not really on *how* of the program. 
+

@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-03-07 Tue 09:29 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Yogesh Sajanikar" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+
+<div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9"><span class="section-number-2">1</span> Writing recursive functions</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+In this recipe, we will be looking at writing recursive functions,
+and tail recursions which will allow efficient, infinite recursion.
+</p>
+
+<p>
+We will take famous fibonacci number to implement our solution. We
+will then take this very simple solution and then convert it to a
+tail recursive efficient solution.
+</p>
+</div>
+
+
+<div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1"><span class="section-number-3">1.1</span> Fibonacci Number</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+We know that, the first two fibonacci numbers are 0, and 1, and
+remaining numbers are calculated by a simple formula,
+</p>
+
+<p>
+\(fib(n) = fib(n-1) + fib(n-2)\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">1.2</span> Recursive solution</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Now we can implement the solution. First we will start with
+declaration.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #84ffff;">fib</span> <span style="color: #ffcc80;">::</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span>
+</pre>
+</div>
+
+<p>
+Given an integer argument, n,  we will return n'th fibonacci
+number. 
+</p>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-4">
+<h4 id="orgheadline2"><span class="section-number-4">1.2.1</span> Base cases</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+The base cases are straight forward, we disallow negative
+arguments. And precalculate 0'th and 1'st fibonacci numbers.
+</p>
+
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #84ffff;">fib</span> n <span style="color: #ffcc80;">|</span> n <span style="color: #ffcc80;">&lt;</span> 0 <span style="color: #ffcc80;">=</span> error <span style="color: #9ccc65;">"Negative index"</span>
+<span style="color: #84ffff;">fib</span> 0 <span style="color: #ffcc80;">=</span> 0
+<span style="color: #84ffff;">fib</span> 1 <span style="color: #ffcc80;">=</span> 1
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline3" class="outline-4">
+<h4 id="orgheadline3"><span class="section-number-4">1.2.2</span> Remaining cases</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+All that remains is to calculate the remaining cases,
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #84ffff;">fib</span> n <span style="color: #ffcc80;">=</span> fib (n<span style="color: #ffcc80;">-</span>1) <span style="color: #ffcc80;">+</span> fib (n<span style="color: #ffcc80;">-</span>2)
+</pre>
+</div>
+
+<p>
+We have recursively called the same function. 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4"><span class="section-number-4">1.2.3</span> Is recursive solution efficient</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+We can run the soltion to check the efficiency. In GHCi, we load
+the function, and set the timing/memory stats to be printed after
+each execution. 
+</p>
+
+<pre class="example">
+λ&gt; :set +s
+</pre>
+
+<p>
+And now we can run the function 'fib' with increasing values. 
+</p>
+<pre class="example">
+λ&gt; fib 10
+55
+(0.00 secs, 0 bytes)
+λ&gt; fib 20
+6765
+(0.05 secs, 15,287,704 bytes)
+λ&gt; fib 30
+832040
+(3.69 secs, 1,262,480,024 bytes)
+</pre>
+
+<p>
+You can easily see that though the implementation is simple, and
+even though the change in the input argument linear, the timing
+has shot up exponentially. 
+</p>
+
+<p>
+This is because haskell is lazy (it will not evaluate the
+expression unless it is evaluated). And most importantly, the
+above implementation is not tail recursive. i.e. during the
+recursion, the recursive expression is not the function call
+itself. In the above implementation, "fib (n-1) + fib (n-2)" is
+the expression where recursion occurs. And since the expression
+actually is ( (+ ) (fib (n-1)) (fib (n-2))), one can see that the
+result expression contains an operation (+) which is required to
+be evaluated after calling the two recursive calls. This requires
+compiler to build up stack.
+</p>
+
+<p>
+If on the other hand, if we can make the last expression, the
+function call itself, compiler can actually optimize the recursion
+in such a way that only function call is kept in the stack. This
+is called tail recursion.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6"><span class="section-number-4">1.2.4</span> Implementing tail recursive function by worker pattern</h4>
+<div class="outline-text-4" id="text-1-2-4">
+<p>
+Since the very simple recursive definition is not efficient, we
+will convert the definition to a tail recursive. We use worker
+pattern here. In this pattern, we create a worker function and
+pass an additional argument where we keep the result. Whenever we
+hit the base case, we return the result.
+</p>
+
+<p>
+In case of fibonacci number, the number depends upon two previous
+number. Let's use previous numbers as argument to our worker
+function. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #84ffff;">fibworker</span> <span style="color: #ffcc80;">::</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span>
+<span style="color: #84ffff;">fibworker</span> n p1 p2 <span style="color: #ffcc80;">=</span> <span style="color: #fff59d;">_</span>
+</pre>
+</div>
+
+<p>
+Where p1 and p2 are previous fibonacci numbers respectively, and
+p1 &gt; p2. 
+</p>
+
+<p>
+We then calculate, next number by adding two previous results, n1
+and n2. Since this is a new number, we make following recursive
+call. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #84ffff;">fibworker</span> n p1 p2 <span style="color: #ffcc80;">=</span> fib (n<span style="color: #ffcc80;">-</span>1) (p1<span style="color: #ffcc80;">+</span>p2) p1
+</pre>
+</div>
+
+<p>
+Note that we have replaced previous fibonacci numbers p1 and p2 by
+(p1+p2) and p1 in the recursive calls. Also notice that we have
+reduced n to n-1 to indicate that we have done with a step in the
+calculation of fibonacci number.
+</p>
+
+<p>
+The recursive call will soon hit '2' in the first argument. When
+that happens, we will be ready to spit out the result, by just
+adding two previous values.
+</p>
+
+<p>
+Why '2', you might ask. Do remember in the worker we use two
+previous values. It means that we have to stop recursion at '2'
+when we already have two values. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #84ffff;">fibworker</span> 2 p1 p2 <span style="color: #ffcc80;">=</span> p1 <span style="color: #ffcc80;">+</span> p2
+</pre>
+</div>
+
+<p>
+We can trivially complete the remaining cases, 0, and 1 by
+directly returning the result
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #84ffff;">fibworker</span> 0 <span style="color: #fff59d;">_</span> <span style="color: #fff59d;">_</span> <span style="color: #ffcc80;">=</span> 0
+<span style="color: #84ffff;">fibworker</span> 1 <span style="color: #fff59d;">_</span> <span style="color: #fff59d;">_</span> <span style="color: #ffcc80;">=</span> 1
+</pre>
+</div>
+
+<p>
+We now can wrap worker in another function, called 'fib1' so that
+we can provide initial values to the worker function. The initial
+values are second and first fibonacci numbers, i.e. 1 and 0
+respectively. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #84ffff;">fib1</span> n <span style="color: #ffcc80;">|</span> n <span style="color: #ffcc80;">&lt;</span> 0 <span style="color: #ffcc80;">=</span> error <span style="color: #9ccc65;">"Negative index"</span>
+<span style="color: #84ffff;">fib1</span> n <span style="color: #ffcc80;">=</span> fibworker n 1 0
+</pre>
+</div>
+
+<p>
+Also notice that the fibworker is an internal function, and need
+not be used elsewhere, and hence we can move the whole definition
+of fibworker as a where construct,
+</p>
+
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #84ffff;">fib1</span> n <span style="color: #ffcc80;">|</span> n <span style="color: #ffcc80;">&lt;</span> 0 <span style="color: #ffcc80;">=</span> error <span style="color: #9ccc65;">"Negative index"</span>
+<span style="color: #84ffff;">fib1</span> n <span style="color: #ffcc80;">=</span> fibworker n 1 0
+  <span style="color: #fff59d;">where</span>
+    fibworker <span style="color: #ffcc80;">::</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span>
+    fibworker 0 <span style="color: #fff59d;">_</span> <span style="color: #fff59d;">_</span> <span style="color: #ffcc80;">=</span> 0
+    fibworker 1 <span style="color: #fff59d;">_</span> <span style="color: #fff59d;">_</span> <span style="color: #ffcc80;">=</span> 1
+    fibworker 2 p1 p2 <span style="color: #ffcc80;">=</span> p1 <span style="color: #ffcc80;">+</span> p2
+    fibworker n p1 p2 <span style="color: #ffcc80;">=</span> fibworker (n<span style="color: #ffcc80;">-</span>1) (p1<span style="color: #ffcc80;">+</span>p2) p1
+</pre>
+</div>
+</div>
+
+
+<ol class="org-ol"><li><a id="orgheadline5"></a>Running efficient version<br  /><div class="outline-text-5" id="text-1-2-4-1">
+<p>
+We can now test the efficient version in GHCi. 
+</p>
+
+<pre class="example">
+λ&gt; fib1 10
+55
+(0.00 secs, 0 bytes)
+λ&gt; fib1 20
+6765
+(0.00 secs, 0 bytes)
+λ&gt; fib1 30
+832040
+(0.00 secs, 0 bytes)
+</pre>
+
+
+<p>
+You can see that the function execution is much more efficient,
+and memory usage is very low. 
+</p>
+</div></li></ol>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7"><span class="section-number-4">1.2.5</span> Fibonacci Evaluator</h4>
+<div class="outline-text-4" id="text-1-2-5">
+<p>
+The source for the fibonacci evaluator is given here.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell"><span style="color: #fff59d;">module</span> <span style="color: #84ffff;">Fibonacci</span> <span style="color: #fff59d;">where</span>
+
+<span style="color: #b0bec5;">-- </span><span style="color: #b0bec5;">Naive recursive fibonacci implementation.</span>
+<span style="color: #84ffff;">fib</span> <span style="color: #ffcc80;">::</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span>
+<span style="color: #84ffff;">fib</span> n <span style="color: #ffcc80;">|</span> n <span style="color: #ffcc80;">&lt;</span> 0 <span style="color: #ffcc80;">=</span> error <span style="color: #9ccc65;">"Negative index"</span>
+<span style="color: #84ffff;">fib</span> 0 <span style="color: #ffcc80;">=</span> 0
+<span style="color: #84ffff;">fib</span> 1 <span style="color: #ffcc80;">=</span> 1
+<span style="color: #84ffff;">fib</span> n <span style="color: #ffcc80;">=</span> fib (n<span style="color: #ffcc80;">-</span>1) <span style="color: #ffcc80;">+</span> fib (n<span style="color: #ffcc80;">-</span>2)
+
+<span style="color: #b0bec5;">-- </span><span style="color: #b0bec5;">Efficient fibonacci implementation with worker pattern</span>
+<span style="color: #84ffff;">fib1</span> n <span style="color: #ffcc80;">|</span> n <span style="color: #ffcc80;">&lt;</span> 0 <span style="color: #ffcc80;">=</span> error <span style="color: #9ccc65;">"Negative index"</span>
+<span style="color: #84ffff;">fib1</span> n <span style="color: #ffcc80;">=</span> fibworker n 1 0
+  <span style="color: #fff59d;">where</span>
+    fibworker <span style="color: #ffcc80;">::</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span> <span style="color: #ffcc80;">-&gt;</span> <span style="color: #84ffff;">Int</span>
+    fibworker 0 <span style="color: #fff59d;">_</span> <span style="color: #fff59d;">_</span> <span style="color: #ffcc80;">=</span> 0
+    fibworker 1 <span style="color: #fff59d;">_</span> <span style="color: #fff59d;">_</span> <span style="color: #ffcc80;">=</span> 1
+    fibworker 2 p1 p2 <span style="color: #ffcc80;">=</span> p1 <span style="color: #ffcc80;">+</span> p2
+    fibworker n p1 p2 <span style="color: #ffcc80;">=</span> fibworker (n<span style="color: #ffcc80;">-</span>1) (p1<span style="color: #ffcc80;">+</span>p2) p1
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Yogesh Sajanikar</p>
+<p class="date">Created: 2017-03-07 Tue 09:29</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

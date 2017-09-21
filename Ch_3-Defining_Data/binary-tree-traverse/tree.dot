@@ -1,0 +1,46 @@
+digraph btree {
+        rankdir = BT
+        root [ label = "1" ]
+
+        l [ label = "2" ]
+
+        r [ label = "3" ]
+
+        l -> root
+        r -> root
+
+        ll [ label = "4" ]
+        rl [ label = "5" ]
+
+        lr [ label = "6" ]
+        rr [ label = "7" ]
+
+        ll -> l
+        rl -> l
+
+        lr -> r
+        rr -> r
+
+        lll [label = "8" ]
+        rll [label = "9" ]
+        lrl [label = "10" ]
+        rrl [label = "11" ]
+
+        llr [label = "12" ]
+        rlr [label = "13" ]
+        lrr [label = "14" ]
+        rrr [label = "15" ]
+
+
+        lll -> ll
+        rll -> ll
+
+        lrl -> rl
+        rrl -> rl
+
+        llr -> lr
+        rlr -> lr
+
+        lrr -> rr
+        rrr -> rr
+}

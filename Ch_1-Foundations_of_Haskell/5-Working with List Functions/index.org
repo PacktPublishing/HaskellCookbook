@@ -1,0 +1,11 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+
+* Working with List
+  In this recipe, we will work with one of the most used polymorphic
+  data type in Haskell, list type.
+* Getting Ready...
+  
+* How do we do it...
+* How it works...
+

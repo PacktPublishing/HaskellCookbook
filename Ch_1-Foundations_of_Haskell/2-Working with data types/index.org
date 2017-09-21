@@ -1,0 +1,134 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+#+OPTIONS: author:nil creator:nil toc:nil c:nil num:nil
+#+OPTIONS: html-style:nil html-validation-link:nil 
+
+
+
+* Working with Data Types
+  In this recipe, we will work with basic data types in Haskell. We
+  will also define our own data types. 
+
+* How do we do it...
+  
+  1. Create a new project 'data-types' using =stack new
+     data-types=. Change into the directory =data-types=, and build
+     the new project using using =stack build=. 
+
+  2. At the command prompt, run =stack ghci=. You will see the
+     prompt. Enter =:type (5 :: Int) =
+
+     #+begin_example
+       ,*Main Lib> :type (5 :: Int)
+       (5 :: Int) :: Int
+     #+end_example
+
+     =:type= is a GHCi command to show the type of the expression. (In
+     this case the expression is =5=). It means that the expression
+     =(5 :: Int)= is an Int. Now enter =:type 5=
+     
+     #+begin_example
+     *Main Lib> :type 5
+     5 :: Num t => t
+     #+end_example
+
+     GHCi will interpret 5 as *5 :: Num t => t* which means that
+     Haskell identified 5 as some numerical type *t*. =Num t => t=
+     shows that the type is t, and that it has an extra qualificiation
+     that it shows some *Num* properties. Note that the result of
+     *:type 5* is different than *:type (5::Int)*.
+
+     Now enter *:type (5 :: Double)*. You will see (5 :: Double) ::
+     Double. Do the same thing with (5::Float)
+
+     #+begin_example
+     *Main Lib> :type (5 :: Double)
+     (5 :: Double) :: Double
+     #+end_example
+    
+     Do note the difference between *5*, *5::Int*, *5::Float* and
+     *5::Double*. Without qualification type (such as :: Int), Haskell
+     interprets the type as a generic type *Num t => t* i.e. 5 is some
+     type t, which is a *Num t* or numerical type. 
+
+  3. *Boolean Types* - Now enter following at the prompt
+
+     #+begin_example
+     *Main Lib> :type True
+     True :: Bool
+     *Main Lib> :type False
+     False :: Bool
+     #+end_example
+     
+     =True=, and =False= are valid boolean value, and their type is
+     =Bool=. In fact, =True= and =False= are the only valid Bool
+     values in Haskell. If you try =1 :: Bool=, you will see error. 
+
+     #+begin_example
+       *Main Lib> 1 :: Bool
+
+       <interactive>:9:1: error:
+           • No instance for (Num Bool) arising from the literal ‘1’
+           • In the expression: 1 :: Bool
+             In an equation for ‘it’: it = 1 :: Bool
+     #+end_example
+
+     Haskell will complain that 1 is a numerical type, and 'Bool' is
+     not a numerical type which would somehow represent it (value 1).
+
+  4. Now type =:type 'C'= at the prompt. GHCi will report its type to
+     be ='C' :: Char=. Char is another data type and represents a
+     Unicode character. A character is entered within single quotes.
+
+  5. Get more information about each type. For doing it, you can enter
+     =:info <type>= at the prompt.
+
+     #+begin_example
+       *Main Lib> :info Bool
+       data Bool = False | True
+       	  -- Defined in ‘ghc-prim-0.5.0.0:GHC.Types’
+       instance Bounded Bool -- Defined in ‘GHC.Enum’
+       instance Enum Bool -- Defined in ‘GHC.Enum’
+       instance Eq Bool -- Defined in ‘ghc-prim-0.5.0.0:GHC.Classes’
+       instance Ord Bool -- Defined in ‘ghc-prim-0.5.0.0:GHC.Classes’
+       instance Read Bool -- Defined in ‘GHC.Read’
+       instance Show Bool -- Defined in ‘GHC.Show’
+     #+end_example
+       
+     This will show more inforamtion about the type. For Bool, Haskell
+     shows that that it has two values =False | True=, and that it is
+     defined in `ghc-prim-0.5.0.0:GHC.Types`. Here ghc-prim is the
+     package name, which is followed by its version 0.5.0.0 and then
+     Haskell tells that 'GHC.Types' is the module in which it is
+     defined. 
+
+* How does it work...
+  1. We have seen four basic types, Int, Double, Char and Float. More
+     information about these types is given below.
+
+   |--------+-------------------------------------------------+---------------------------------|
+   | Type   | Description                                     | Remarks                         |
+   |--------+-------------------------------------------------+---------------------------------|
+   | Int    | Fixed precision integer type                    | Range $[-2^{29} .. (2^{29-1})]$ |
+   | Float  | Single precision (32 bit) floating point number |                                 |
+   | Double | Double precision (64 bit) floating point number |                                 |
+   | Char   | Character                                       |                                 |
+   | Bool   | Boolean values                                  | True or False.                  |
+   |--------+-------------------------------------------------+---------------------------------|
+
+  2. Note that all types start with a *capital letter*.
+
+  3. In the last step *:info Bool*, Haskell also shows various
+     *instance* information. It tells more about behavior about the
+     type. For example *instance Eq Bool* means that the type *Bool*
+     is an instance of some type class *Eq*. In Haskell, type-class
+     should be read as a type which is associated with some behavior
+     (or functions). Here the *Eq* type class is used in Haskell for
+     showing /equality/. 
+
+* There is more...
+  You can get more information about type classes by exploring =:info
+  Eq=. GHCi will tell you which types have /instances/ of *Eq* type
+  class, GHCi will also tell you which are the methods defined for
+  Eq. 
+

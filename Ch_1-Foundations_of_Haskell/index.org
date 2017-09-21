@@ -1,0 +1,32 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+#+OPTIONS: author:nil creator:nil toc:nil c:nil num:nil
+#+OPTIONS: html-style:nil html-validation-link:nil 
+#+OPTIONS: html-link-use-abs-url:nil html-postamble:auto
+#+OPTIONS: html-preamble:t html-scripts:t html-style:t
+#+OPTIONS: html5-fancy:nil tex:t
+#+HTML_DOCTYPE: xhtml-strict
+#+HTML_CONTAINER: div
+#+DESCRIPTION:
+#+KEYWORDS:
+#+HTML_LINK_HOME:
+#+HTML_LINK_UP:
+#+HTML_MATHJAX:
+#+HTML_HEAD:
+#+HTML_HEAD_EXTRA:
+#+TITLE: Foundations of Haskell
+#+SUBTITLE:
+#+INFOJS_OPT:
+#+LATEX_HEADER:
+
+In this chapter, we will cover following recipes
+
+  * Understanding Functional Programming
+  * Getting Started with Haskell
+  * Working with data types
+  * Working with Pure Functions
+  * Working with List Functions
+  * Writing functions with effects
+
+#+INCLUDE: "introduction.org"
+#+INCLUDE: "understanding-functional-programming.org"

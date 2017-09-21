@@ -1,0 +1,237 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+#+OPTIONS: author:nil creator:nil toc:nil c:nil num:nil
+#+OPTIONS: html-style:nil html-validation-link:nil 
+
+** Working with User Defined Data Types
+   In this recipe, we will create our own type and work with them. 
+
+   Working with basic data types may be sufficient for very very
+   simple programs. As we get into more complex tasks, articulating
+   the program around basic data types gets more difficult. In fact,
+   we would like to build a vocabulary for the domain in which we are
+   writing a program. This is made possible by user defined data
+   types. 
+
+   Haskell has a very rich and expressive set of data definition
+   artillary. You will also notice how different it is from Object
+   Oriented Programming.
+
+*** How to do it...
+    1. Create a new project 'user-data-types' using *stack new
+       user-data-types*. Change into the directory *user-data-types*,
+       and build the new project using using *stack build*.
+
+    2. Set an editor, and open the file *app/Main.hs*. It should
+       already contain the following source.
+
+       #+begin_src haskell
+       module Main where
+       
+       import Lib
+       
+       main :: IO ()
+       main = someFunc
+       #+end_src
+
+    3. At line 4, create a new data type. 
+
+*** Working with 'data' and 'type'.
+
+    In this example, we will define our own Boolean type, and then use
+    it to define simple boolean expression. You can try each
+    expression at GHCi prompt.
+
+    #+begin_src haskell
+      data MyBoolean = MyTrue | MyFalse
+    #+end_src
+
+    To define our own data type, we use the keyword 'data' followed by
+    the type name. A type, as already mentioned above, should begin
+    with a capital letter. In this case name of our data type is
+    'MyBoolean'. 
+
+    Note how we are defining the data. The data type 'MyBoolean' has
+    only two possible values, *MyTrue* or *MyFalse*. We represent
+    these values separated by '|'. 
+
+    'MyBoolean' is called type constructor, and it can take zero or
+    more type arguments, i.e. each argument represent a type. In our
+    example, we do not need any type argument for representing Boolean
+    values. This is called 'nullary type constructor' or simply a
+    'type'. 
+
+    On the right hand side, we have two possible values 'MyTrue' and
+    'MyFalse'. These are called data constructors. Data constructors
+    can also take one or more value arguments. Again in this case,
+    each constructor 'MyTrue' and 'MyFalse' is enough to identify the
+    boolean value we would like to represent and need not take any
+    value argument. 
+
+    When we want to make our data type more generic, we define the
+    data type with type argument. For example, a very important data
+    type in Haskell called *Either* is defined in following way.
+
+    #+begin_src haskell
+      data Either a b = Left a | Right b deriving Show
+    #+end_src
+    
+    *Either* is used where we want to represent either a value of type
+    a or value of type b. 
+
+    In the above example, the type constructor takes two arguments,
+    'a' and 'b'. These represents types. On the right hand side, we
+    have two constructors, *Left* and *Right*. Each data constructor
+    takes exactly one value argument, either of type a or type b. 
+
+    Please note the difference between, type constructor taking a type
+    arguments. It means that we will use types to construct a
+    type. For example, if we want to represent a type 'Either' that
+    can either have an integer value or a double value by supplying
+    'Int' or 'Double' to the type constructor. Hence a type
+    constructor for a data type constructs a type by taking type
+    arguments. 
+
+    #+begin_src haskell
+    Either Int Double  -- This is a type and will give error at GHCi prompt
+    #+end_src
+    
+    Data constructors on other hand represent 'value' and not the
+    type. If we want to represent the value of 'Either Int Double', we
+    can do that by
+
+    #+begin_src haskell
+      Left 5 :: Either Int Double
+      Right 3.0 :: Either Int Double
+    #+end_src
+
+    If you try out above values in at the GHCi prompt, you will see
+    following
+
+    #+begin_example
+      Prelude> Left 5 :: Either Int Double
+      Left 5
+      Prelude> Right 3.0 :: Either Int Double
+      Right 3.0
+    #+end_example
+
+    
+*** Data Type for Boolean expression
+
+    We will create a data type for representing boolean expression. A
+    very simple expression involves just 'True' and 'False'
+
+    #+begin_src haskell
+      data Boolean = True
+                   | False
+    #+end_src
+
+
+    We can expand the above very simple expressions by adding
+    'And'/'Or' and 'Not' 
+
+    #+begin_src haskell
+            data Boolean = And Boolean Boolean
+                         | Or Boolean Boolean
+                         | Not Boolean
+                         | True
+                         | False
+    #+end_src
+
+    The above data type definition is self explanatory. It means that
+    the we can construct Boolean type by using any one of four
+    possible data constructors. And we can represent simple
+    expressions like,
+
+    #+begin_src haskell
+      And True False
+    #+end_src
+
+
+    or more complex ones like
+
+    #+begin_src haskell
+      Not (And True False)
+    #+end_src
+
+    Note here that the value in the bracket is used to represent a
+    value of type Boolean. In this case, it is an 'And' expression. 
+
+    We can further try more complex expressions like,
+
+    #+begin_src haskell
+      Not (Or (And True False) (And True True))
+    #+end_src
+
+    But what if we would like to represent Boolean expressions with
+    integer. We can consider 0 as False, and any other value as
+    True. We cannot use earlier definition for Boolean expression, as
+    it was specific to Boolean type itself. 
+
+    We can modify the above type to be more generic by adding a type
+    argument, 
+
+    #+begin_src haskell
+      data Boolean a = Boolean a -- Lifting a value to Boolean
+                     | And (Boolean a) (Boolean a) 
+                     | Or (Boolean a) (Boolean a)
+                     | Not (Boolean a)
+                     | True
+                     | False
+                     deriving Show
+    #+end_src
+
+   
+    Now our data type Boolean takes a type argument, and we can use it
+    to represent Boolean expression using any type. 
+
+    Since we can use any type and use our type constructor 'Boolean a'
+    to convert it into a boolean type, we have added a data
+    constructor 'Boolean' to allow us constructing Boolean type by
+    using value of supplied type argument 'a'. Note that a data
+    constructor can have same name as that of type constructor.
+
+    In this example and the one in the previous section, we have used
+    'deriving Show' at the end of the data definition. 'Show' is a
+    type class and it allows us to print values in the GHCi REPL. When
+    we use deriving 'Show', haskell creates an implicit definition for
+    our data type to convert it to a String.
+
+
+    Now we can also construct boolean expressions using values of
+    other types. For example,
+
+    #+begin_src haskell
+      Not (Boolean (10 :: Int))
+    #+end_src
+    
+    Or,
+
+    #+begin_src haskell
+      Not (Or (And True (Boolean (10 :: Int))) (And True True))
+    #+end_src
+    
+    If we check type of above expression, GHCi will print
+
+    #+begin_example
+      λ> :t (Not (Or (And True (Boolean (10 :: Int))) (And True True)))
+      (Not (Or (And True (Boolean (10 :: Int))) (And True True))) :: Boolean Int
+    #+end_example
+   
+    The full listing is here,
+
+    #+begin_src haskell
+      module Boolean where
+
+
+      import Prelude hiding (True, False)
+
+
+      data Boolean a = Boolean a -- Lifting a value to Boolean
+                     | And (Boolean a) (Boolean a) 
+                     | Or (Boolean a) (Boolean a)
+                     | Not (Boolean a)
+                     | True
+                     | False
+                     deriving Show
+    #+end_src

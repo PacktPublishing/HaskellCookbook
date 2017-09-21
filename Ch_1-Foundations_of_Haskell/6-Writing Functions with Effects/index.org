@@ -1,0 +1,2 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar

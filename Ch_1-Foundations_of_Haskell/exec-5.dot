@@ -1,0 +1,10 @@
+digraph G {
+  compound=true
+  rankdir = LR
+  fn [ label = "{add | 20 | 10}", shape = Mrecord ]
+
+  exp [ label = "20 + 10"]
+
+  fn -> exp [lhead = cluster_A]
+
+}

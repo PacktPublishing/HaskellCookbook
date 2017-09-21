@@ -1,0 +1,17 @@
+digraph G {
+  compound=true
+  rankdir = LR
+  fn [ label = "{add | a | b}", shape = Mrecord ]
+
+  subgraph cluster_A {
+    rankdir = LR
+    subgraph cluster_B {
+      exp [ label = "a + b"]
+      b -> exp
+    }
+    a -> b [ lhead=cluster_B]
+  }
+  
+  fn -> a [lhead = cluster_A]
+
+}

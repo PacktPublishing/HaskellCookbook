@@ -1,0 +1,8 @@
+#+STARTUP: hidestars overview
+#+TITLE: Working with common containers and strings
+
+We have looked at basics of Haskell data types, functions, higher order functions and other abstractions such as type classes. We have also looked at important type classes and concepts such as Functors, Applicatives, and Monads.  
+
+In this chapter, we will look at common container data types, and will work with them. We will visit strings again in this chapter, but with the intention of working in a efficient way. The 'text' and 'bytestring' packages provide us with an opportunity to work with efficient string types. Furthermore, the containers being a collection like list, also provide a way to fold and traverse in the similar way. We will look at two type classes Traversable and Foldable which gives a unified way of folding and traversing over a data type. 
+
+

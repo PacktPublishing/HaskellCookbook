@@ -1,0 +1,11 @@
+#+STARTUP: hidestars overview
+#+AUTHOR: Yogesh Sajanikar
+#+OPTIONS: author:nil creator:nil toc:nil c:nil num:nil
+#+OPTIONS: html-style:nil html-validation-link:nil 
+
+* Introduction
+  In functional programming, functions are values too. It means that
+  one can return function as values, and can pass functions as
+  values. In this chapter, we will look at following recipes. 
+
+  
