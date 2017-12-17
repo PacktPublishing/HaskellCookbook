@@ -29,5 +29,3 @@ This book can, of course, be read without a computer at hand, in which case, you
 
 * [Diving Deep into Swift [Integrated Course]](https://www.packtpub.com/application-development/diving-deep-swift-integrated-course?utm_source=github&utm_medium=repository&utm_campaign=9781788394000)
 
-### Suggestions and Feedback
-[Click here](https://docs.google.com/forms/d/e/1FAIpQLSe5qwunkGf6PUvzPirPDtuy1Du5Rlzew23UBp2S-P3wB-GcwQ/viewform) if you have any feedback or suggestions.
