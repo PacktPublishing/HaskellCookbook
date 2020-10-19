@@ -1,7 +1,7 @@
-# Perl 6 Deep Dive
-This is the code repository for [Perl 6 Deep Dive](https://www.packtpub.com/application-development/perl-6-deep-dive?utm_source=github&utm_medium=repository&utm_campaign=9781787282049), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the book from start to finish.
+# Haskell Cookbook
+This is the code repository for [Haskell Cookbook](https://www.packtpub.com/product/haskell-cookbook/9781786461353), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the book from start to finish.
 ## About the Book
-Perl is a family of high-level, general-purpose, interpreted, dynamic programming languages consisting of Perl 5 and Perl 6. Perl 6 helps developers write concise and declarative code that is easy to maintain.
+Haskell is a purely functional language that has the great ability to develop large and difficult softwares that are easily maintainable. Haskell Cookbook provides recipes that start by illustrating the principles of functional programming in Haskell, and then gradually build up your expertise in creating industrial strength programs to accomplish any goal.
 ## Instructions and Navigation
 All of the code is organized into folders. Each folder starts with a number followed by the application name. For example, Chapter02.
 
@@ -20,7 +20,7 @@ sub add($a, $b) {
 }
 ```
 
-This book can, of course, be read without a computer at hand, in which case, you need nothing more than the book itself. However, to follow the examples in the book, you need a compiler of Perl 6, which you can download from http://rakudo.org/how-to-get-rakudo/ (more details on installing it are in Chapter 1, What is Perl 6?). The Rakudo Perl 6 compiler works on a variety of platforms--Windows, macOS, and Linux. You will also need your favorite text editor to write programs in.
+This book is targeted at readers who wish to learn the Haskell language. If you are a beginner, Haskell Cookbook will get you started. If you are experienced, it will expand your knowledge base. A basic knowledge of programming will be helpful.
 
 ## Related Products
 * [Modular Programming in Java 9](https://www.packtpub.com/application-development/modular-programming-java-9?utm_source=github&utm_medium=repository&utm_campaign=9781787126909)
